@@ -38,7 +38,11 @@ describe('UI-тесты для проекта TimeWeb', () => {
         await page.click(exitCross);
         await page.waitForSelector(timewebMainMenu);
         await page.click(timewebMainMenu);
-        const createSiteText = await page.textContent(createSite)
-        assert.equal(createSiteText, 'Создать сайт', 'Пользователь не зарегистрирован')
+        const createSiteText = await page.textContent(createSite);
+        assert.strictEqual(createSiteText.trim(), 'Создать сайт', 'Пользователь не зарегистрирован')
+    });
+
+    it ('Создание сайта', async () => {
+
     })
 })
