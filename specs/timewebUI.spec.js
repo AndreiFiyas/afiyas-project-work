@@ -30,9 +30,10 @@ describe('UI-тесты для проекта TimeWeb', () => {
     const nameSiteField = '#site_dir';
     const commentSiteField = '#site_comment';
     const applyBtn = '#save_button';
-    const newSiteName = '.ui-table > tbody > #trow_4 > .simplecell > .site_directory_name';
+    const newSiteName = '.ui-table > tbody > #trow_2 > .simplecell > .site_directory_name';
     const siteSettingBtn = '#trow_0 > .simplecell > .help-icons-wrap > .ui-link-btn-icon > .icon-config';
-    const siteComment = '#site_config_dialog_5901841 > .form-horizontal > .form-actions > #save_button > .ui-button-text';
+    const siteComment = '.ui-table > tbody > #trow_0 > .simplecell > .ui-overflow-wrap:nth-child(3)';
+
     //domain page
     const addDomain = '.layout-cnt-w > #p0 > .page-start > .quick-actions-panel > .quick-actions-panel-item:nth-child(2)';
     const moveDomain = '.layout-cnt-w > #layout-pjax > .page-domains > .operation-menu > .operation-menu__item:nth-child(2)';
@@ -91,36 +92,35 @@ describe('UI-тесты для проекта TimeWeb', () => {
     //     const movedDomainNameText = await page.textContent(movedDomainName)
     //     assert.strictEqual(movedDomainNameText, 'gattaka.ru', 'Домен не добавлен')
     // })
-    it('Создание сайта', async () => {
-        await page.click(loginField);
-        await page.fill(loginField, 'cr51484');
-        await page.click(passwordField);
-        await page.fill(passwordField, 'RO7hz8p6b1Uv');
-        await page.click(loginBtn);
-        await page.click(createSite);
-        await page.click(addNewSite);
-        await page.click(nameSiteField);
-        await page.fill(nameSiteField, 'test99');
-        await page.click(commentSiteField);
-        await page.fill(commentSiteField, 'New Comment');
-        await page.click(nameSiteField);
-        await page.fill(nameSiteField, 'test9999');
-        const newSiteNameText = await page.textContent(newSiteName);
-        assert.strictEqual(newSiteNameText.trim(), 'test04', 'Сайт не создан')
-    })
-    // it ('Изменение комментария сайта', async () => {
+    // it('Создание сайта', async () => {
     //     await page.click(loginField);
     //     await page.fill(loginField, 'cr51484');
     //     await page.click(passwordField);
     //     await page.fill(passwordField, 'RO7hz8p6b1Uv');
     //     await page.click(loginBtn);
     //     await page.click(createSite);
-    //     await page.click(siteSettingBtn);
+    //     await page.click(addNewSite);
+    //     await page.click(nameSiteField);
+    //     await page.type(nameSiteField, 'test02');
     //     await page.click(commentSiteField);
-    //     await page.fill(commentSiteField, 'New Comment');
+    //     await page.type(commentSiteField, 'New Comment');
     //     await page.click(applyBtn);
-    //     const siteCommentText = await page.textContent(siteComment);
-    //     assert.strictEqual(siteCommentText, 'New Comment', 'Комментарий не изменен')
-    // })
+    //     const newSiteNameText = await page.textContent(newSiteName);
+    //     assert.strictEqual(newSiteNameText.trim(), 'test02', 'Сайт не создан')
+    // });
+    it ('Изменение конфигурации сайта', async () => {
+        await page.click(loginField);
+        await page.fill(loginField, 'cr51484');
+        await page.click(passwordField);
+        await page.fill(passwordField, 'RO7hz8p6b1Uv');
+        await page.click(loginBtn);
+        await page.click(createSite);
+        await page.click(siteSettingBtn);
+        await page.click(commentSiteField);
+        await page.type(commentSiteField, 'New Comment');
+        await page.click(applyBtn);
+        const siteCommentText = await page.textContent(siteComment, {timeout: 100000});
+        assert.strictEqual(siteCommentText, 'New Comment', 'Комментарий не изменен')
+    })
 
 })
