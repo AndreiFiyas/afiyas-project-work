@@ -35,19 +35,17 @@ jobs:
       if: always()
       continue-on-error: true
       with:
-        ref: gh-pages
-        path: gh-pages
+        ref: projectwork
+        path: projectwork
 
     - name: Allure Report with history
       uses: simple-elf/allure-report-action@v1.6
-
-
     - name: Test marketplace action
       uses: simple-elf/allure-report-action@master
       if: always()
       #id: allure-report
       with:
-        allure_results: /allure-results
+        allure_results: allure-results
         #gh_pages: gh-pages
         allure_report: allure-report
         allure_history: allure-history
@@ -57,9 +55,9 @@ jobs:
       if: always()
       uses: peaceiris/actions-gh-pages@v2
       env:
-        PERSONAL_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        PUBLISH_BRANCH: gh-pages
-        PUBLISH_DIR: allure-history
+        personal_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_brunch: projectwork
+        publish_dir: allure-history
 
     - name: Send telegram message on push
       uses: appleboy/telegram-action@master
