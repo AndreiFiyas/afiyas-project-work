@@ -31,17 +31,19 @@ describe('UI-тесты для проекта TimeWeb', () => {
     const commentSiteField = '#site_comment';
     const applyBtn = '#save_button';
     const newSiteName = '.ui-table > tbody > #trow_2 > .simplecell > .site_directory_name';
+    const siteSettingMenu = '#php-select';
+    const phpSettingValue = '.l-decor-bg > .ui-dialog > #php-menu > #ui-id-16 > .ui-menu-item-caption';
     const siteSettingBtn = '#trow_0 > .simplecell > .help-icons-wrap > .ui-link-btn-icon > .icon-config';
     const siteComment = '.ui-table > tbody > #trow_0 > .simplecell > .ui-overflow-wrap:nth-child(3)';
+    const siteSettingValue = '.ui-table > tbody > #trow_0 > .simplecell > .ui-overflow-wrap:nth-child(4)';
 
     //domain page
     const addDomain = '.layout-cnt-w > #p0 > .page-start > .quick-actions-panel > .quick-actions-panel-item:nth-child(2)';
     const moveDomain = '.layout-cnt-w > #layout-pjax > .page-domains > .operation-menu > .operation-menu__item:nth-child(2)';
     const moveDomainField = '.move-domain__row > .move-domain__input > .input > .input__wrapper > .input__field';
     const moveDomainBtn = '.js-region-form > div > .content-block > .content-block__actions > .tw-button-primary';
-    const movedDomainName = '.cpS-table-accordion > tbody > .domain-row:nth-child(2) > .domain-list-table__description > .cpS-lk-simple-one-line'
-
-
+    const movedDomainName = '.cpS-table-accordion > tbody > .domain-row:nth-child(2) > .domain-list-table__description > .cpS-lk-simple-one-line';
+    const domainValidationMessage = '.move-domain__item > .move-domain__row > .move-domain__input > .input > .input__help';
 
 
 
@@ -69,16 +71,16 @@ describe('UI-тесты для проекта TimeWeb', () => {
     //     const createSiteText = await page.textContent(createSite);
     //     assert.strictEqual(createSiteText.trim(), 'Создать сайт', 'Пользователь не зарегистрирован')
     // });
-    // it ('Авторизация пользователя', async () => {
-    //     await page.click(loginField);
-    //     await page.fill(loginField, 'cr51484');
-    //     await page.click(passwordField);
-    //     await page.fill(passwordField, 'RO7hz8p6b1Uv');
-    //     await page.click(loginBtn);
-    //     const accountNameText = await page.textContent(accountName);
-    //     assert.strictEqual(accountNameText, 'cr51484', 'Пользователь не авторизован');
-    // })
-    // it ('Проверка занятого домена', async () => {
+    it ('Авторизация пользователя', async () => {
+        await page.click(loginField);
+        await page.fill(loginField, 'cr51484');
+        await page.click(passwordField);
+        await page.fill(passwordField, 'RO7hz8p6b1Uv');
+        await page.click(loginBtn);
+        const accountNameText = await page.textContent(accountName);
+        assert.strictEqual(accountNameText, 'cr51484', 'Пользователь не авторизован');
+    })
+    // it ('Проверка свободного домена', async () => {
     //     await page.click(loginField);
     //     await page.fill(loginField, 'cr51484');
     //     await page.click(passwordField);
@@ -92,6 +94,20 @@ describe('UI-тесты для проекта TimeWeb', () => {
     //     const movedDomainNameText = await page.textContent(movedDomainName)
     //     assert.strictEqual(movedDomainNameText, 'gattaka.ru', 'Домен не добавлен')
     // })
+    it ('Проверка занятого домена', async () => {
+        await page.click(loginField);
+        await page.fill(loginField, 'cr51484');
+        await page.click(passwordField);
+        await page.fill(passwordField, 'RO7hz8p6b1Uv');
+        await page.click(loginBtn);
+        await page.click(addDomain);
+        await page.click(moveDomain);
+        await page.click(moveDomainField);
+        await page.fill(moveDomainField, 'google',);
+        await page.waitForTimeout(3000);
+        const domainValidationMessageText = await page.textContent(domainValidationMessage);
+        assert.strictEqual(domainValidationMessageText.trim(), 'Неправильное имя домена.', 'Ошибка в валидации домена');
+    })
     // it('Создание сайта', async () => {
     //     await page.click(loginField);
     //     await page.fill(loginField, 'cr51484');
@@ -108,19 +124,34 @@ describe('UI-тесты для проекта TimeWeb', () => {
     //     const newSiteNameText = await page.textContent(newSiteName);
     //     assert.strictEqual(newSiteNameText.trim(), 'test02', 'Сайт не создан')
     // });
-    it ('Изменение конфигурации сайта', async () => {
-        await page.click(loginField);
-        await page.fill(loginField, 'cr51484');
-        await page.click(passwordField);
-        await page.fill(passwordField, 'RO7hz8p6b1Uv');
-        await page.click(loginBtn);
-        await page.click(createSite);
-        await page.click(siteSettingBtn);
-        await page.click(commentSiteField);
-        await page.type(commentSiteField, 'New Comment');
-        await page.click(applyBtn);
-        const siteCommentText = await page.textContent(siteComment, {timeout: 100000});
-        assert.strictEqual(siteCommentText, 'New Comment', 'Комментарий не изменен')
-    })
-
+    // it ('Изменение комментария сайта', async () => {
+    //     await page.click(loginField);
+    //     await page.fill(loginField, 'cr51484');
+    //     await page.click(passwordField);
+    //     await page.fill(passwordField, 'RO7hz8p6b1Uv');
+    //     await page.click(loginBtn);
+    //     await page.click(createSite);
+    //     await page.click(siteSettingBtn);
+    //     await page.click(commentSiteField);
+    //     await page.type(commentSiteField, 'New Comment');
+    //     await page.click(applyBtn);
+    //     await page.waitForTimeout(3000);
+    //     const siteCommentText = await page.textContent(siteComment);
+    //     assert.strictEqual(siteCommentText, 'New Comment', 'Комментарий не изменен');
+    // });
+    // it ('Изменение настроек сайта', async () => {
+    //     await page.click(loginField);
+    //     await page.fill(loginField, 'cr51484');
+    //     await page.click(passwordField);
+    //     await page.fill(passwordField, 'RO7hz8p6b1Uv');
+    //     await page.click(loginBtn);
+    //     await page.click(createSite);
+    //     await page.click(siteSettingBtn);
+    //     await page.click(siteSettingMenu);
+    //     await page.click(phpSettingValue);
+    //     await page.click(applyBtn);
+    //     await page.waitForTimeout(3000);
+    //     const siteSettingValueText = await page.textContent(siteSettingValue);
+    //     assert.strictEqual(siteSettingValueText, 'PHP 7.2 - Python 3.4 - HTTP', 'Настройка сайта не изменена');
+    // })
 })
