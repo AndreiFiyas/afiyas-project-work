@@ -60,7 +60,6 @@ jobs:
         PERSONAL_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         PUBLISH_BRANCH: gh-pages
         PUBLISH_DIR: allure-history
-
     - name: Send telegram message on push
       uses: appleboy/telegram-action@master
       with:
