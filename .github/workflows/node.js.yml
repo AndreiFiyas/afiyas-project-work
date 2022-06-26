@@ -35,25 +35,44 @@ jobs:
       if: always()
       continue-on-error: true
       with:
-        ref: projectwork
-        path: projectwork
+        ref: gh-pages
+        path: gh-pages
 
-    - name: Allure Report with history
-      uses: simple-elf/allure-report-action@v1.6
-    - name: Test marketplace action
+    - name: Allure Report action from marketplace
       uses: simple-elf/allure-report-action@master
       if: always()
-      #id: allure-report
+      id: allure-report
       with:
         allure_results: allure-results
-        #gh_pages: gh-pages
-        allure_report: allure-report
         allure_history: allure-history
         keep_reports: 20
+
     - name: Deploy report to Github Pages
       if: always()
       uses: peaceiris/actions-gh-pages@v2
       env:
-        personal_token: ${{ secrets.PERSONAL_TOKEN }}
-        publish_brunch: projectwork
-        publish_dir: allure-history
+        PERSONAL_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        PUBLISH_BRANCH: gh-pages
+        PUBLISH_DIR: allure-history
+
+    - uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: testsReport
+        path: |
+          report.html
+          jest-html-reporters-attach/report
+          
+
+    - name: send telegram message on push
+      uses: appleboy/telegram-action@v0.1.1
+      with:
+        to: ${{ secrets.TELEGRAM_TO }}
+        token: ${{ secrets.TELEGRAM_TOKEN }}
+        message: |
+          ${{ github.actor }} created commit:
+          Commit message: ${{ github.event.commits[0].message }}
+          
+          Repository: ${{ github.repository }}
+          
+          See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
