@@ -35,8 +35,8 @@ jobs:
       if: always()
       continue-on-error: true
       with:
-        ref: projectwork
-        path: allure-results
+        ref: gh-pages
+        path: last-history
 
     - name: Allure Report action from marketplace
       uses: simple-elf/allure-report-action@master
