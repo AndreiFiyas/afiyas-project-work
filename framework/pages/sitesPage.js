@@ -18,48 +18,13 @@ const siteSettingValue = '.ui-table > tbody > #trow_0 > .simplecell > .ui-overfl
 
 const SitesOperations = {
     createNewSite: async (page) => {
-        await page.click(loginField);
-        await page.fill(loginField, 'cr51484');
-        await page.click(passwordField);
-        await page.fill(passwordField, 'RO7hz8p6b1Uv');
-        await page.click(loginBtn);
-        await page.click(createSite);
-        await page.click(addNewSite);
-        await page.click(nameSiteField);
-        await page.type(nameSiteField, 'test02');
-        await page.click(applyBtn);
-        const newSiteNameText = await page.textContent(newSiteName);
-        return newSiteNameText;
+
     },
     changeCommentSite: async (page) => {
-        await page.click(loginField);
-        await page.fill(loginField, 'cr51484');
-        await page.click(passwordField);
-        await page.fill(passwordField, 'RO7hz8p6b1Uv');
-        await page.click(loginBtn);
-        await page.click(createSite);
-        await page.click(siteSettingBtn);
-        await page.click(commentSiteField);
-        await page.type(commentSiteField, 'New Comment');
-        await page.click(applyBtn);
-        await page.waitForTimeout(3000);
-        const siteCommentText = await page.textContent(siteComment);
-        return siteCommentText;
+
     },
     changeSettingSite: async (page) => {
-        await page.click(loginField);
-        await page.fill(loginField, 'cr51484');
-        await page.click(passwordField);
-        await page.fill(passwordField, 'RO7hz8p6b1Uv');
-        await page.click(loginBtn);
-        await page.click(createSite);
-        await page.click(siteSettingBtn);
-        await page.click(siteSettingMenu);
-        await page.click(phpSettingValue);
-        await page.click(applyBtn);
-        await page.waitForTimeout(3000);
-        const siteSettingValueText = await page.textContent(siteSettingValue);
-        return siteSettingValueText;
+
     }
 }
 

@@ -10,32 +10,10 @@ const domainValidationMessage = '.move-domain__item > .move-domain__row > .move-
 
 const DomainOperations = {
     checkFreeDomain: async (page) => {
-        await page.click(loginField);
-        await page.fill(loginField, 'cr51484');
-        await page.click(passwordField);
-        await page.fill(passwordField, 'RO7hz8p6b1Uv');
-        await page.click(loginBtn);
-        await page.click(addDomain)
-        await page.click(moveDomain)
-        await page.click(moveDomainField)
-        await page.fill(moveDomainField, 'gattaka.ru')
-        await page.click(moveDomainBtn)
-        const movedDomainNameText = await page.textContent(movedDomainName)
-        return movedDomainNameText;
+
     },
     checkBusyDomain: async (page) => {
-        await page.click(loginField);
-        await page.fill(loginField, 'cr51484');
-        await page.click(passwordField);
-        await page.fill(passwordField, 'RO7hz8p6b1Uv');
-        await page.click(loginBtn);
-        await page.click(addDomain);
-        await page.click(moveDomain);
-        await page.click(moveDomainField);
-        await page.fill(moveDomainField, 'google',);
-        await page.waitForTimeout(3000);
-        const domainValidationMessageText = await page.textContent(domainValidationMessage);
-        return domainValidationMessageText;
+
     }
 }
 
