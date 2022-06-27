@@ -1,7 +1,8 @@
 import {run, stop} from "../lib/browser";
 import chai from 'chai';
 const assert = chai.assert;
-import app from "../framework/pages";
+import app from '../framework/pages'
+import {stringify} from "mocha/lib/utils";
 
 
 describe('UI-тесты для проекта TimeWeb', () => {
@@ -16,7 +17,8 @@ describe('UI-тесты для проекта TimeWeb', () => {
     });
 
     it ('Регистрация нового пользователя', async () => {
-        await app().RegisterPage().registerNewUser(page)
+        await page.goto('https://timeweb.com/ru/services/hosting/')
+        const createSiteText = await app().RegisterPage().registerNewUser(page);
         assert.strictEqual(createSiteText.trim(), 'Создать сайт', 'Пользователь не зарегистрирован')
     });
     // it ('Авторизация пользователя', async () => {
