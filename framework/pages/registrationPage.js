@@ -13,7 +13,6 @@ const accountName = '.acc-name';
 
 const RegisterPage = {
     registerNewUser: async (page) => {
-        await page.goto('https://timeweb.com/ru/services/hosting/')
         await page.waitForSelector(tarifYearBtn);
         await page.click(tarifYearBtn);
         await page.waitForSelector(fioField);
@@ -32,6 +31,7 @@ const RegisterPage = {
         await page.waitForSelector(timewebMainMenu);
         await page.click(timewebMainMenu);
         const createSiteText = await page.textContent(createSite);
+        console.log(createSiteText)
         return createSiteText;
     },
     loginUser: async (page) => {

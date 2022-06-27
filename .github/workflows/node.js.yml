@@ -35,8 +35,8 @@ jobs:
       if: always()
       continue-on-error: true
       with:
-        ref: gh-pages
-        path: gh-pages
+        ref: projectwork
+        path: allure-results
 
     - name: Allure Report action from marketplace
       uses: simple-elf/allure-report-action@master
@@ -44,8 +44,6 @@ jobs:
       id: allure-report
       with:
         allure_results: allure-results
-        allure_history: allure-history
-        keep_reports: 20
 
     - name: Deploy report to Github Pages
       if: always()
@@ -64,15 +62,15 @@ jobs:
           jest-html-reporters-attach/report
           
 
-    - name: send telegram message on push
-      uses: appleboy/telegram-action@v0.1.1
-      with:
-        to: ${{ secrets.TELEGRAM_TO }}
-        token: ${{ secrets.TELEGRAM_TOKEN }}
-        message: |
-          ${{ github.actor }} created commit:
-          Commit message: ${{ github.event.commits[0].message }}
-          
-          Repository: ${{ github.repository }}
-          
-          See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
+#    - name: send telegram message on push
+#      uses: appleboy/telegram-action@v0.1.1
+#      with:
+#        to: ${{ secrets.TELEGRAM_TO }}
+#        token: ${{ secrets.TELEGRAM_TOKEN }}
+#        message: |
+#          ${{ github.actor }} created commit:
+#          Commit message: ${{ github.event.commits[0].message }}
+#
+#          Repository: ${{ github.repository }}
+#
+#          See changes: https://github.com/${{ github.repository }}/commit/${{github.sha}}
