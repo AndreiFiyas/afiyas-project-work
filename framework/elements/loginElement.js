@@ -16,9 +16,9 @@ const RegisterElement = {
     registerUserElement: async (page) => {
         await page.click(tarifYearBtn);
         await page.click(fioField);
-        await page.fill(fioField, 'Фонарев Сергей');
+        await page.fill(fioField, 'Габидуллин Руслан');
         await page.click(emailField);
-        await page.fill(emailField, 'garutest@gg.com');
+        await page.fill(emailField, 'gabby@gads.com');
         await page.click(phoneField);
         await page.fill(phoneField, '79666666666');
         await page.click(registerBtn);
