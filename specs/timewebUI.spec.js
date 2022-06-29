@@ -17,7 +17,6 @@ describe('UI-тесты для проекта TimeWeb', () => {
     afterEach(async () => {
         await stop();
     });
-
     it ('Проверка перехода в ПУА после регистрации нового пользователя', async () => {
         const registerFioValue = 'Расторгуев Федор';
         const registerEmailValue = 'frast@mnm.com';
