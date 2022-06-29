@@ -8,7 +8,6 @@ jobs:
   tests:
 
     runs-on: ubuntu-latest
-    allow-failures: true
 
     strategy:
       matrix:
@@ -25,6 +24,7 @@ jobs:
     - run: npm test
     - uses: actions/upload-artifact@v3
       if: always()
+      continue-on-error: true
       with:
         name: testReport
         path: |
@@ -42,12 +42,14 @@ jobs:
     - name: Allure Report action from marketplace
       uses: simple-elf/allure-report-action@master
       if: always()
+      continue-on-error: true
       id: allure-report
       with:
         allure_results: allure-results
 
     - name: Deploy report to Github Pages
       if: always()
+      continue-on-error: true
       uses: peaceiris/actions-gh-pages@v2
       env:
         PERSONAL_TOKEN: ${{ secrets.GITHUB_TOKEN }}
