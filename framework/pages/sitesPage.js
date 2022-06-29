@@ -17,40 +17,40 @@ const siteComment = '.ui-table > tbody > #trow_0 > .simplecell > .ui-overflow-wr
 const siteSettingValue = '.ui-table > tbody > #trow_0 > .simplecell > .ui-overflow-wrap:nth-child(4)';
 
 const SitesOperations = {
-    createNewSite: async (page) => {
+    createNewSite: async (page, loginValue, passwordValue, testSiteValue) => {
         await page.click(loginField);
-        await page.fill(loginField, 'cr51484');
+        await page.fill(loginField, loginValue);
         await page.click(passwordField);
-        await page.fill(passwordField, 'RO7hz8p6b1Uv');
+        await page.fill(passwordField, passwordValue);
         await page.click(loginBtn);
         await page.click(createSite);
         await page.click(addNewSite);
         await page.click(nameSiteField);
-        await page.type(nameSiteField, 'test02');
+        await page.type(nameSiteField, testSiteValue);
         await page.click(applyBtn);
         const newSiteNameText = await page.textContent(newSiteName);
         return newSiteNameText;
     },
-    changeCommentSite: async (page) => {
+    changeCommentSite: async (page, loginValue, passwordValue, testCommentValue) => {
         await page.click(loginField);
-        await page.fill(loginField, 'cr51484');
+        await page.fill(loginField, loginValue);
         await page.click(passwordField);
-        await page.fill(passwordField, 'RO7hz8p6b1Uv');
+        await page.fill(passwordField, passwordValue);
         await page.click(loginBtn);
         await page.click(createSite);
         await page.click(siteSettingBtn);
         await page.click(commentSiteField);
-        await page.type(commentSiteField, 'New Comment');
+        await page.type(commentSiteField, testCommentValue);
         await page.click(applyBtn);
         await page.waitForTimeout(3000);
         const siteCommentText = await page.textContent(siteComment);
         return siteCommentText;
     },
-    changeSettingSite: async (page) => {
+    changeSettingSite: async (page, loginValue, passwordValue) => {
         await page.click(loginField);
-        await page.fill(loginField, 'cr51484');
+        await page.fill(loginField, loginValue);
         await page.click(passwordField);
-        await page.fill(passwordField, 'RO7hz8p6b1Uv');
+        await page.fill(passwordField, passwordValue);
         await page.click(loginBtn);
         await page.click(createSite);
         await page.click(siteSettingBtn);

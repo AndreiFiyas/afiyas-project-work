@@ -12,18 +12,18 @@ const loginBtn = '.login-form-container > .login > form > .formButtonRow--2JbPt 
 const accountName = '.acc-name';
 
 const RegisterPage = {
-    registerNewUser: async (page) => {
+    registerNewUser: async (page, registerFioValue, registerEmailValue, registerPhoneValue) => {
         await page.waitForSelector(tarifYearBtn);
         await page.click(tarifYearBtn);
         await page.waitForSelector(fioField);
         await page.click(fioField);
-        await page.fill(fioField, 'Шугаев Алексей');
+        await page.fill(fioField, registerFioValue);
         await page.waitForSelector(emailField);
         await page.click(emailField);
-        await page.fill(emailField, 'saturn98@gmail.com');
+        await page.fill(emailField, registerEmailValue);
         await page.waitForSelector(phoneField);
         await page.click(phoneField);
-        await page.fill(phoneField, '79666666666');
+        await page.fill(phoneField, registerPhoneValue);
         await page.waitForSelector(registerBtn);
         await page.click(registerBtn);
         await page.waitForSelector(exitCross);
@@ -34,11 +34,11 @@ const RegisterPage = {
         console.log(createSiteText)
         return createSiteText;
     },
-    loginUser: async (page) => {
+    loginUser: async (page, loginValue, passwordValue) => {
         await page.click(loginField);
-        await page.fill(loginField, 'cr51484');
+        await page.fill(loginField, loginValue);
         await page.click(passwordField);
-        await page.fill(passwordField, 'RO7hz8p6b1Uv');
+        await page.fill(passwordField, passwordValue);
         await page.click(loginBtn);
         const accountNameText = await page.textContent(accountName);
         return accountNameText;

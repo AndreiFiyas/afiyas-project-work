@@ -1,48 +1,57 @@
 import {run, stop} from "../lib/browser";
 import chai from 'chai';
 const assert = chai.assert;
+import urls from "../framework/config";
 import app from '../framework/pages'
-import {stringify} from "mocha/lib/utils";
 
 
 describe('UI-тесты для проекта TimeWeb', () => {
     let page
+    const loginValue = 'cr51484';
+    const passwordValue = 'RO7hz8p6b1Uv';
 
     beforeEach(async () => {
-        page = await run('https://hosting.timeweb.ru/login');
+        page = await run(urls.timeweb);
     });
 
     afterEach(async () => {
         await stop();
     });
 
-    it ('Регистрация нового пользователя', async () => {
+    it ('Проверка перехода в ПУА после регистрации нового пользователя', async () => {
+        const registerFioValue = 'Шугаев Алексей';
+        const registerEmailValue = 'saturn98@gmail.com';
+        const registerPhoneValue = '79666666666';
         await page.goto('https://timeweb.com/ru/services/hosting/')
-        const createSiteText = await app().RegisterPage().registerNewUser(page);
-        assert.strictEqual(createSiteText.trim(), 'Создать сайт', 'Пользователь не зарегистрирован')
+        const createSiteText = await app().RegisterPage().registerNewUser(page, registerFioValue, registerEmailValue, registerPhoneValue);
+        assert.strictEqual(createSiteText.trim(), 'Создать сайт', 'Переход в ПУА не произошел')
     });
-    it ('Авторизация пользователя', async () => {
-        const accountNameText = await app().RegisterPage().loginUser(page);
+    it ('Проверка успешной авторизации пользователя', async () => {
+        const accountNameText = await app().RegisterPage().loginUser(page, loginValue, passwordValue);
         assert.strictEqual(accountNameText.trim(), 'cr51484', 'Пользователь не авторизован');
     });
-    it ('Проверка свободного домена', async () => {
-        const movedDomainNameText = await app().DomainOperations().checkFreeDomain(page);
+    it ('Проверка добавления в ПУА пользователя свободного домена', async () => {
+        const testDomainName = 'gattaka.ru'
+        const movedDomainNameText = await app().DomainOperations().checkFreeDomain(page, loginValue, passwordValue, testDomainName);
         assert.strictEqual(movedDomainNameText, 'gattaka.ru', 'Домен не добавлен')
     });
-    it ('Проверка занятого домена', async () => {
-        const domainValidationMessageText = await app().DomainOperations().checkBusyDomain(page);
+    it ('Проверка валидации на добавление в ПУА пользователя занятого домена', async () => {
+        const wrongDomainName = 'google'
+        const domainValidationMessageText = await app().DomainOperations().checkBusyDomain(page, loginValue, passwordValue, wrongDomainName);
         assert.strictEqual(domainValidationMessageText.trim(), 'Неправильное имя домена.', 'Ошибка в валидации домена');
     })
-    it('Создание сайта', async () => {
-        const newSiteNameText = await app().SitesOperations().createNewSite(page);
+    it('Проверка создания нового сайта в ПУА пользователя', async () => {
+        const testSiteValue = 'test02';
+        const newSiteNameText = await app().SitesOperations().createNewSite(page, loginValue, passwordValue, testSiteValue);
         assert.strictEqual(newSiteNameText.trim(), 'test02', 'Сайт не создан')
     });
-    it ('Изменение комментария сайта', async () => {
-        const siteCommentText = await app().SitesOperations().changeCommentSite(page);
+    it ('Проверка возможности изменения комментария сайта', async () => {
+        const testCommentValue = 'New Comment';
+        const siteCommentText = await app().SitesOperations().changeCommentSite(page, loginValue, passwordValue, testCommentValue);
         assert.strictEqual(siteCommentText, 'New Comment', 'Комментарий не изменен');
     });
-    it ('Изменение настроек сайта', async () => {
-        const siteSettingValueText = await app().SitesOperations().changeSettingSite(page);
+    it ('Проверка возможности изменения настроек сайта', async () => {
+        const siteSettingValueText = await app().SitesOperations().changeSettingSite(page, loginValue, passwordValue);
         assert.strictEqual(siteSettingValueText, 'PHP 7.2 - Python 3.4 - HTTP', 'Настройка сайта не изменена');
     })
 })

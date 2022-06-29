@@ -19,7 +19,7 @@
     "type": "git",
     "url": "git+https://github.com/mnmlsniper/jsCourse.git"
   },
-  "author": "mnmlsniper",
+  "author": "afiyas",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/mnmlsniper/jsCourse/issues"
@@ -40,9 +40,6 @@
     "jest-cli": "^27.5.1",
     "jest-html-reporters": "^3.0.9",
     "lint-staged": "^11.2.6",
-    "mocha": "^10.0.0",
-    "node-fetch": "^2.6.7",
-    "playwright": "^1.22.2",
-    "supertest": "^6.2.2"
+    "playwright": "^1.22.2"
   }
 }
