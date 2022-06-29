@@ -1,6 +1,3 @@
-const loginField = '.login-form-container > .login > form > .formRow--1LwmF:nth-child(2) > .input--3M8Ak';
-const passwordField = '.login-form-container > .login > form > .formRow--1LwmF:nth-child(3) > .input--3M8Ak';
-const loginBtn = '.login-form-container > .login > form > .formButtonRow--2JbPt > .button--9XBxA';
 const addDomain = '.layout-cnt-w > #p0 > .page-start > .quick-actions-panel > .quick-actions-panel-item:nth-child(2)';
 const moveDomain = '.layout-cnt-w > #layout-pjax > .page-domains > .operation-menu > .operation-menu__item:nth-child(2)';
 const moveDomainField = '.move-domain__row > .move-domain__input > .input > .input__wrapper > .input__field';
@@ -10,12 +7,7 @@ const domainValidationMessage = '.move-domain__item > .move-domain__row > .move-
 
 
 const DomainOperations = {
-    checkFreeDomain: async (page, loginValue, passwordValue, testDomainName) => {
-        await page.click(loginField);
-        await page.fill(loginField, loginValue);
-        await page.click(passwordField);
-        await page.fill(passwordField, passwordValue);
-        await page.click(loginBtn);
+    checkFreeDomain: async (page, testDomainName) => {
         await page.click(addDomain)
         await page.click(moveDomain)
         await page.click(moveDomainField)
@@ -24,12 +16,7 @@ const DomainOperations = {
         const movedDomainNameText = await page.textContent(movedDomainName)
         return movedDomainNameText;
     },
-    checkBusyDomain: async (page, loginValue, passwordValue, wrongDomainName) => {
-        await page.click(loginField);
-        await page.fill(loginField, loginValue);
-        await page.click(passwordField);
-        await page.fill(passwordField, passwordValue);
-        await page.click(loginBtn);
+    checkBusyDomain: async (page, wrongDomainName) => {
         await page.click(addDomain);
         await page.click(moveDomain);
         await page.click(moveDomainField);

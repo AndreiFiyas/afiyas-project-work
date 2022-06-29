@@ -1,9 +1,3 @@
-import DomainOperations from "./domainPage";
-
-const loginField = '.login-form-container > .login > form > .formRow--1LwmF:nth-child(2) > .input--3M8Ak';
-const passwordField = '.login-form-container > .login > form > .formRow--1LwmF:nth-child(3) > .input--3M8Ak';
-const loginBtn = '.login-form-container > .login > form > .formButtonRow--2JbPt > .button--9XBxA';
-const accountName = '.acc-name';
 const addNewSite = 'tr > .element__block > #create_site_block > #create_site_no_all_used > .link';
 const nameSiteField = '#site_dir';
 const commentSiteField = '#site_comment';
@@ -17,12 +11,7 @@ const siteComment = '.ui-table > tbody > #trow_0 > .simplecell > .ui-overflow-wr
 const siteSettingValue = '.ui-table > tbody > #trow_0 > .simplecell > .ui-overflow-wrap:nth-child(4)';
 
 const SitesOperations = {
-    createNewSite: async (page, loginValue, passwordValue, testSiteValue) => {
-        await page.click(loginField);
-        await page.fill(loginField, loginValue);
-        await page.click(passwordField);
-        await page.fill(passwordField, passwordValue);
-        await page.click(loginBtn);
+    createNewSite: async (page, testSiteValue) => {
         await page.click(createSite);
         await page.click(addNewSite);
         await page.click(nameSiteField);
@@ -31,12 +20,7 @@ const SitesOperations = {
         const newSiteNameText = await page.textContent(newSiteName);
         return newSiteNameText;
     },
-    changeCommentSite: async (page, loginValue, passwordValue, testCommentValue) => {
-        await page.click(loginField);
-        await page.fill(loginField, loginValue);
-        await page.click(passwordField);
-        await page.fill(passwordField, passwordValue);
-        await page.click(loginBtn);
+    changeCommentSite: async (page, testCommentValue) => {
         await page.click(createSite);
         await page.click(siteSettingBtn);
         await page.click(commentSiteField);
@@ -46,12 +30,7 @@ const SitesOperations = {
         const siteCommentText = await page.textContent(siteComment);
         return siteCommentText;
     },
-    changeSettingSite: async (page, loginValue, passwordValue) => {
-        await page.click(loginField);
-        await page.fill(loginField, loginValue);
-        await page.click(passwordField);
-        await page.fill(passwordField, passwordValue);
-        await page.click(loginBtn);
+    changeSettingSite: async (page) => {
         await page.click(createSite);
         await page.click(siteSettingBtn);
         await page.click(siteSettingMenu);

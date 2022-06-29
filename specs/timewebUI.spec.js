@@ -26,31 +26,36 @@ describe('UI-тесты для проекта TimeWeb', () => {
         assert.strictEqual(createSiteText.trim(), 'Создать сайт', 'Переход в ПУА не произошел')
     });
     it ('Проверка успешной авторизации пользователя', async () => {
-        const accountNameText = await app().RegisterPage().loginUser(page, loginValue, passwordValue);
+        const accountNameText = await app().LoginPage().loginUser(page, loginValue, passwordValue);
         assert.strictEqual(accountNameText.trim(), 'cr51484', 'Пользователь не авторизован');
     });
     it ('Проверка добавления в ПУА пользователя свободного домена', async () => {
         const testDomainName = 'gattaka.ru'
-        const movedDomainNameText = await app().DomainOperations().checkFreeDomain(page, loginValue, passwordValue, testDomainName);
+        await app().LoginPage().loginUser(page, loginValue, passwordValue);
+        const movedDomainNameText = await app().DomainOperations().checkFreeDomain(page, testDomainName);
         assert.strictEqual(movedDomainNameText, 'gattaka.ru', 'Домен не добавлен')
     });
     it ('Проверка валидации на добавление в ПУА пользователя занятого домена', async () => {
         const wrongDomainName = 'google'
-        const domainValidationMessageText = await app().DomainOperations().checkBusyDomain(page, loginValue, passwordValue, wrongDomainName);
+        await app().LoginPage().loginUser(page, loginValue, passwordValue);
+        const domainValidationMessageText = await app().DomainOperations().checkBusyDomain(page, wrongDomainName);
         assert.strictEqual(domainValidationMessageText.trim(), 'Неправильное имя домена.', 'Ошибка в валидации домена');
-    })
+    });
     it('Проверка создания нового сайта в ПУА пользователя', async () => {
         const testSiteValue = 'test02';
-        const newSiteNameText = await app().SitesOperations().createNewSite(page, loginValue, passwordValue, testSiteValue);
+        await app().LoginPage().loginUser(page, loginValue, passwordValue);
+        const newSiteNameText = await app().SitesOperations().createNewSite(page, testSiteValue);
         assert.strictEqual(newSiteNameText.trim(), 'test02', 'Сайт не создан')
     });
     it ('Проверка возможности изменения комментария сайта', async () => {
         const testCommentValue = 'New Comment';
-        const siteCommentText = await app().SitesOperations().changeCommentSite(page, loginValue, passwordValue, testCommentValue);
+        await app().LoginPage().loginUser(page, loginValue, passwordValue);
+        const siteCommentText = await app().SitesOperations().changeCommentSite(page, testCommentValue);
         assert.strictEqual(siteCommentText, 'New Comment', 'Комментарий не изменен');
     });
     it ('Проверка возможности изменения настроек сайта', async () => {
-        const siteSettingValueText = await app().SitesOperations().changeSettingSite(page, loginValue, passwordValue);
+        await app().LoginPage().loginUser(page, loginValue, passwordValue);
+        const siteSettingValueText = await app().SitesOperations().changeSettingSite(page);
         assert.strictEqual(siteSettingValueText, 'PHP 7.2 - Python 3.4 - HTTP', 'Настройка сайта не изменена');
     })
 })
