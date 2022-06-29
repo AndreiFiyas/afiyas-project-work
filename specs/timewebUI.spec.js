@@ -19,8 +19,8 @@ describe('UI-тесты для проекта TimeWeb', () => {
     });
 
     it ('Проверка перехода в ПУА после регистрации нового пользователя', async () => {
-        const registerFioValue = 'Шугаев Алексей';
-        const registerEmailValue = 'saturn98@gmail.com';
+        const registerFioValue = 'Расторгуев Федор';
+        const registerEmailValue = 'frast@mnm.com';
         const registerPhoneValue = '79666666666';
         await page.goto('https://timeweb.com/ru/services/hosting/')
         const createSiteText = await app().RegisterPage().registerNewUser(page, registerFioValue, registerEmailValue, registerPhoneValue);
